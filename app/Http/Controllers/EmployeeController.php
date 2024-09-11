@@ -51,7 +51,7 @@ class EmployeeController extends Controller
         $userRole = $user->role;
 
         if ($userRole) {
-            // جلب مهارات الموظف
+         
             $employee = Employee::where('user_id', Auth::user()->id)->first();
 
             if(!$employee){
@@ -69,15 +69,13 @@ class EmployeeController extends Controller
 
             }
 
-            $employeeSkills = explode(',', $employee->skills); // نفترض أن المهارات مفصولة بفواصل
+            $employeeSkills = explode(',', $employee->skills); 
 
-            // جلب فرص العمل
             $posts = Jobs::join('company', 'jobs.company_id', '=', 'company.id')
                             ->join('users', 'company.user_id', '=', 'users.id')
                             ->select('jobs.company_id','jobs.id', 'jobs.jobName', 'jobs.salary', 'jobs.description', 'jobs.deadline', 'users.name', 'users.image', 'users.address')
                             ->get();
 
-            // حساب درجة التوافق
             foreach ($posts as $post) {
                 $jobDescription = $post->description;
                 $jobName = $post->jobName;
@@ -93,7 +91,6 @@ class EmployeeController extends Controller
                 $post->matchScore = $matchCount;
             }
 
-            // ترتيب فرص العمل بناءً على درجة التوافق
             $sortedPosts = collect($posts)->sortByDesc('matchScore')->values()->all();
 
             return response()->json([
@@ -365,13 +362,4 @@ class EmployeeController extends Controller
 
     }
 
-    // public function getApplications($id){ needs some updates, to preview the posts I applyed
-    //     $applications = Orders::join('employee', 'orders.employee_id', '=', 'employee.id')
-    //                         ->join('users', 'employee.user_id', '=', 'users.id')
-    //                         ->where('job_id', $id)
-    //                         ->select('users.name', 'users.email', 'users.image', 'users.phone', 'users.address', 'employee.skills', 'employee.university', 'orders.description', 'orders.status')
-    //                         ->get();
-
-    //     return response()->json(['error' => false, 'data' => $applications, 'message' => 'Your applications are there!']);
-    // }
 }

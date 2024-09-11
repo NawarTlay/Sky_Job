@@ -104,17 +104,6 @@ class ChatController extends Controller
 
         $id = $usr->user_id;
 
-        /*
-        // التحقق مما إذا كان المستخدم الحالي موظفًا
-        $employee = Employee::where('user_id', $userId)->first();
-        
-        if (!$employee) {
-            return response()->json([
-                'error' => true,
-                'message' => "This employee doesn't have any content!",
-            ], 404);
-        }
-        */
         $messages = Chat::where(function ($query) use ($id, $userId) {
             $query->where('sender_id', $id)
                   ->where('reciever_id', $userId);
