@@ -34,14 +34,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/company/addPost',[CompanyController::class,'addPost']);
         Route::get('/company/getPosts',[CompanyController::class,'getPosts']);
         Route::post('/company/status',[CompanyController::class,'editStatus']);
-        Route::post('/company/addRating',[CompanyController::class,'addRating']); // new
-        Route::get('/company/ourEmployees',[CompanyController::class,'getAllEmployees']); // في قصة باخر الشي
+        Route::post('/company/addRating',[CompanyController::class,'addRating']);
+        Route::get('/company/ourEmployees',[CompanyController::class,'getAllEmployees']);
 
         Route::middleware('checkApplicationsOwner')->group(function () {
-            Route::get('/company/applications/{id}',[CompanyController::class,'getApplications']); // في قصة باخر الشي    
+            Route::get('/company/applications/{id}',[CompanyController::class,'getApplications']);    
         });
 
-        Route::post('/employee/addRating/{id}',[EmployeeController::class,'addRating']); // new
+        Route::post('/employee/addRating/{id}',[EmployeeController::class,'addRating']);
         Route::post('/employee/profile',[EmployeeController::class,'store']);
         Route::get('/employee/profile',[EmployeeController::class,'index']);
         Route::post('/employee/addOrder',[EmployeeController::class,'addOrder']);
